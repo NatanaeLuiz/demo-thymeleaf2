@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h2>Lista de Produtos</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th>Validade</th>
+                <th>EAN</th>
+                <th>Ativo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${produtos}">
+                <td th:text="${p.codigo}"></td>
+                <td th:text="${p.descricao}"></td>
+                <td th:text="${#dates.format(p.validade, 'dd/MM/yyyy')}"></td>
+                <td th:text="${p.ean}"></td>
+                <td>
+                    <span th:text="${p.ativo} ? 'Sim' : 'Não'"></span>
+                </td>
+                <td>
+                    <a th:href="@{/produtos/editar/{id}(id=${p.codigo})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/produtos/excluir/{id}(id=${p.codigo})}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+</body>
+</html>
