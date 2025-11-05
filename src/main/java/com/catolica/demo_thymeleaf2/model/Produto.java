@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 public class Produto {
 
@@ -14,12 +12,14 @@ public class Produto {
     private String descricao;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
     private Date validade;
 
     private String ean;
 
     private boolean ativo;
+
+    public Produto() {
+    }
 
     public Produto(int codigo, String descricao, Date validade, String ean, boolean ativo) {
         this.codigo = codigo;
