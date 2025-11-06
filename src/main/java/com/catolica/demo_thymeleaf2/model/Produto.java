@@ -21,6 +21,12 @@ public class Produto {
 
     private boolean ativo;
 
+
+    private double preco;
+
+    public Produto() {
+    }
+
     public Produto(int codigo, String descricao, Date validade, String ean, boolean ativo) {
         this.codigo = codigo;
         this.descricao = descricao;
@@ -68,6 +74,15 @@ public class Produto {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+    
     
     
 }
