@@ -23,12 +23,13 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int codigo, String descricao, Date validade, String ean, boolean ativo) {
+    public Produto(int codigo, String descricao, Date validade, String ean, boolean ativo, double preco ) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.validade = validade;
         this.ean = ean;
         this.ativo = ativo;
+        this.preco = preco;
     }
 
     public int getCodigo() {

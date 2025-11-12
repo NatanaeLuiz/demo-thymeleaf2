@@ -1,6 +1,7 @@
 package com.catolica.demo_thymeleaf2.repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,17 @@ public class ProdutoRepository {
                 produto.isAtivo(),
                 produto.getPreco()
         );
+    }
+
+    public List<Produto> listarTodos() {
+        return jdbcTemplate.query("SELECT * FROM produto",
+                (rs, rowNum) -> new Produto(
+                        rs.getInt("codigo"),
+                        rs.getString("descricao"),
+                        rs.getDate("validade"),
+                        rs.getString("ean"),
+                        rs.getBoolean("ativo"),
+                        rs.getDouble("preco")
+                ));
     }
 }

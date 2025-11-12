@@ -1,6 +1,5 @@
 package com.catolica.demo_thymeleaf2.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,23 +19,25 @@ import com.catolica.demo_thymeleaf2.repository.ProdutoRepository;
 @RequestMapping("/produtos")
 public class ProdutoController {
     
-    List<Produto> produtos = new ArrayList<Produto>();
+    // List<Produto> produtos = new ArrayList<Produto>();
 
     private final ProdutoRepository repository;
 
     public ProdutoController(ProdutoRepository repository) {
-        Produto p1 = new Produto(1, "descricaoP1", new Date(), "123456789", true);
-        Produto p2 = new Produto(2, "descricaoP2", new Date(), "987654321", true);
+        // Produto p1 = new Produto(1, "descricaoP1", new Date(), "123456789", true);
+        // Produto p2 = new Produto(2, "descricaoP2", new Date(), "987654321", true);
 
 
-        produtos.add(p1);
-        produtos.add(p2);
+        // produtos.add(p1);
+        // produtos.add(p2);
 
         this.repository = repository;
     }
 
     @GetMapping
     public String listar(Model model){
+
+        List<Produto> produtos = repository.listarTodos();
         
         model.addAttribute("produtos", produtos);
         return "produtos/listar";
