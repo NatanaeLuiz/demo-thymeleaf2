@@ -39,4 +39,28 @@ public class ProdutoRepository {
                         rs.getDouble("preco")
                 ));
     }
+
+    public Produto buscarPorCodigo(int codigo) {
+        return jdbcTemplate.queryForObject("SELECT * FROM produto WHERE codigo = ?",
+                (rs, rowNum) -> new Produto(
+                        rs.getInt("codigo"),
+                        rs.getString("descricao"),
+                        rs.getDate("validade"),
+                        rs.getString("ean"),
+                        rs.getBoolean("ativo"),
+                        rs.getDouble("preco")
+                ), codigo);
+    }
+
+    public void atualizar(Produto produto) {
+        jdbcTemplate.update(
+                "UPDATE produto SET descricao=?, validade=?, ean=?, ativo=?, preco=? WHERE codigo=?",
+                produto.getDescricao(),
+                new Date(produto.getValidade().getTime()),
+                produto.getEan(),
+                produto.isAtivo(),
+                produto.getPreco(),
+                produto.getCodigo()
+        );
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,7 +54,23 @@ public class ProdutoController {
     public String salvar(@ModelAttribute Produto produto,
                         @RequestParam("validade") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validade) {
 
-        repository.salvar(produto);
+        if (produto.getCodigo() == 0)
+            repository.salvar(produto);
+        else
+            repository.atualizar(produto);
         return "redirect:/produtos";
     }
+
+    @GetMapping("/editar/{codigo}")
+    public String editar(@PathVariable int codigo, Model model) {
+        Produto produto = repository.buscarPorCodigo(codigo);
+        model.addAttribute("produto", produto);
+        return "produtos/form";
+    }
+
+    // @GetMapping("/excluir/{codigo}")
+    // public String excluir(@PathVariable int codigo) {
+    //     service.excluir(codigo);
+    //     return "redirect:/produtos";
+    // }
 }
