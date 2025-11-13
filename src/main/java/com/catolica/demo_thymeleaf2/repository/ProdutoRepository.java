@@ -63,4 +63,8 @@ public class ProdutoRepository {
                 produto.getCodigo()
         );
     }
+
+    public void deletar(int codigo) {
+        jdbcTemplate.update("DELETE FROM produto WHERE codigo = ?", codigo);
+    }
 }

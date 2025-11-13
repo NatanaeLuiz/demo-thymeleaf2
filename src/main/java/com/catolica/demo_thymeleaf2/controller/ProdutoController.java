@@ -68,9 +68,9 @@ public class ProdutoController {
         return "produtos/form";
     }
 
-    // @GetMapping("/excluir/{codigo}")
-    // public String excluir(@PathVariable int codigo) {
-    //     service.excluir(codigo);
-    //     return "redirect:/produtos";
-    // }
+    @GetMapping("/excluir/{codigo}")
+    public String excluir(@PathVariable int codigo) {
+        repository.deletar(codigo);
+        return "redirect:/produtos";
+    }
 }
