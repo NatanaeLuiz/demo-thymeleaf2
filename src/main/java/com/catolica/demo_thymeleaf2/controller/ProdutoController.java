@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catolica.demo_thymeleaf2.model.Produto;
-import com.catolica.demo_thymeleaf2.repository.ProdutoRepository;
+import com.catolica.demo_thymeleaf2.service.ProdutoService;
 
 @Controller
 @RequestMapping("/produtos")
@@ -22,23 +22,16 @@ public class ProdutoController {
     
     // List<Produto> produtos = new ArrayList<Produto>();
 
-    private final ProdutoRepository repository;
+    private final ProdutoService service;
 
-    public ProdutoController(ProdutoRepository repository) {
-        // Produto p1 = new Produto(1, "descricaoP1", new Date(), "123456789", true);
-        // Produto p2 = new Produto(2, "descricaoP2", new Date(), "987654321", true);
-
-
-        // produtos.add(p1);
-        // produtos.add(p2);
-
-        this.repository = repository;
+    public ProdutoController(ProdutoService service) {
+        this.service = service;
     }
 
     @GetMapping
     public String listar(Model model){
 
-        List<Produto> produtos = repository.listarTodos();
+        List<Produto> produtos = service.listarTodos();
         
         model.addAttribute("produtos", produtos);
         return "produtos/listar";
@@ -53,24 +46,20 @@ public class ProdutoController {
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute Produto produto,
                         @RequestParam("validade") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validade) {
-
-        if (produto.getCodigo() == 0)
-            repository.salvar(produto);
-        else
-            repository.atualizar(produto);
+        service.salvar(produto);
         return "redirect:/produtos";
     }
 
     @GetMapping("/editar/{codigo}")
     public String editar(@PathVariable int codigo, Model model) {
-        Produto produto = repository.buscarPorCodigo(codigo);
+        Produto produto = service.buscarPorCodigo(codigo);
         model.addAttribute("produto", produto);
         return "produtos/form";
     }
 
     @GetMapping("/excluir/{codigo}")
     public String excluir(@PathVariable int codigo) {
-        repository.deletar(codigo);
+        service.excluir(codigo);
         return "redirect:/produtos";
     }
 }
